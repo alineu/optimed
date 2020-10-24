@@ -1,4 +1,5 @@
 .env
+*.dump
 optimed-env
 __pycache__
 data
