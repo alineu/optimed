@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import JSON
 
 class Result(db.Model):
     __tablename__ = 'results'
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String())
     result_all = db.Column(JSON)
@@ -20,25 +20,23 @@ class Result(db.Model):
 class DrugSearchResult(db.Model):
     __tablename__ = 'drugs'
 
-    index = db.Column(db.Integer, primary_key=True)
-    drugName = db.Column(db.String())
-    condition = db.Column(db.String())
-    rating = db.Column(db.Integer)
-    usefulCount = db.Column(db.Integer)
-    sentiment = db.Column(db.Integer)
-    weighted_by_count_rating = db.Column(db.Integer)    
+    condition = db.Column(db.String(), primary_key=True)
+    drug = db.Column(db.String())
+    count = db.Column(db.Integer)
+    avg_rating = db.Column(db.Integer)
+    avg_sentiment = db.Column(db.Integer)
+    avg_usefulCount = db.Column(db.Integer)    
 
+    def __init__(self, condition, drug, count, 
+        avg_rating, avg_sentiment, avg_usefulCount):
 
-    def __init__(self, index, drugName, condition, rating, 
-        usefulCount, sentiment, weighted_by_count_rating):
-
-        self.index = index
-        self.drugName = drugName
         self.condition = condition
-        self.rating = rating
-        self.usefulCount = usefulCount
-        self.sentiment = sentiment
-        self.weighted_by_count_rating = weighted_by_count_rating
+        self.drug = drug
+        self.count = count
+        self.avg_rating = avg_rating
+        self.avg_sentiment = avg_sentiment
+        self.avg_usefulCount = avg_usefulCount
+
 
     def __repr__(self):
         return '<index {}>'.format(self.index)

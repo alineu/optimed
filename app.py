@@ -11,7 +11,11 @@ from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from stop_words import stops
 from collections import Counter
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
+from nltk.corpus import stopwords
+from sqlalchemy.sql import func
+stop_words = stopwords.words('english')
+import difflib
 
 
 app = Flask(__name__)
@@ -19,9 +23,68 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
+
 q = Queue(connection=conn)
 
-from models import *
+from models import Result
+Base = db.Model.metadata.reflect(db.engine)
+
+conditions_table = db.Model.metadata.tables['drugs']
+pharmacies_latlon = db.Model.metadata.tables['pharmacies_latlon']
+pharmacies_detail = db.Model.metadata.tables['pharmacies_detail']
+
+# conn = db.session.connection()
+# curs = conn.connection.cursor()
+# curs.execute("ROLLBACK")
+# conn.commit()
+
+
+
+def find_matching_condition(user_condition):
+    unique_conditions = [str(condition[0]).lower().strip() for condition in db.session.query(
+        conditions_table.c.condition).group_by(conditions_table.c.condition).all()]
+    difflib_similarity_score = []
+    user_condition = (' '.join([x if x not in stop_words else '' for x in user_condition.lower().split()])).strip()
+    for condition in unique_conditions:
+        condition = re.sub('[^a-zA-Z]', ' ', condition)
+        if len(user_condition.split())>1:
+            score = 0
+            for j, cond in enumerate(user_condition.split()):
+                score += difflib.SequenceMatcher(None, cond, condition).ratio()
+            score /= (j+1)
+        else:
+            score = difflib.SequenceMatcher(None, user_condition, condition).ratio()
+        difflib_similarity_score.append([score, condition])
+    scores = sorted(difflib_similarity_score, key=lambda x: -x[0])[:5] 
+    return scores
+
+def find_matching_drugs(identified_condition):
+    drug_candidates = [' '.join([str(drug[i]) for i in range(1,3)]) for drug in db.session.query(conditions_table.c.condition, conditions_table.c.drug, conditions_table.c.avg_rating)
+    .filter(conditions_table.c.condition == identified_condition)
+    .order_by(desc(conditions_table.c.avg_rating))[:5]]
+
+    return drug_candidates
+
+def find_drug_price_wellrx(drug, zipcode='0.2115'):
+    
+    url = f"https://www.wellrx.com/prescriptions/{drug}/{zipcode}"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser', parse_only=SoupStrainer('span'))
+    prices = [i.text for i in soup.find_all('span', attrs={'class':'price price-large'})]
+    pharmacy_names = [i.text for i in soup.find_all('span', attrs={'class':'list-hint'})]
+    return dict(zip(pharmacy_names, prices))
+
+def get_winner_drugs(num_retries=3):
+    for attempt_no in range(num_retries):
+        try:
+            identified_condition = find_matching_condition(user_condition)[attempt_no]
+            drug_candidates = find_matching_drugs(identified_condition)[attempt_no]
+            return drug_candidates
+        except ValueError as error:
+            if attempt_no < (num_retries - 1):
+                pass
+            else:
+                raise error
 
 
 def count_and_save_words(url):
