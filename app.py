@@ -61,30 +61,43 @@ def find_matching_condition(user_condition):
 def find_matching_drugs(identified_condition):
     drug_candidates = [' '.join([str(drug[i]) for i in range(1,3)]) for drug in db.session.query(conditions_table.c.condition, conditions_table.c.drug, conditions_table.c.avg_rating)
     .filter(conditions_table.c.condition == identified_condition)
-    .order_by(desc(conditions_table.c.avg_rating))[:5]]
-
+    .order_by(desc(conditions_table.c.avg_rating))[:3]]
     return drug_candidates
 
-def find_drug_price_wellrx(drug, zipcode='0.2115'):
+def find_drug_price_wellrx(drug, zipcode='02115'):
     
     url = f"https://www.wellrx.com/prescriptions/{drug}/{zipcode}"
     r = requests.get(url)
-    soup = BeautifulSoup(r.text, 'html.parser', parse_only=SoupStrainer('span'))
-    prices = [i.text for i in soup.find_all('span', attrs={'class':'price price-large'})]
-    pharmacy_names = [i.text for i in soup.find_all('span', attrs={'class':'list-hint'})]
+    soup_1 = BeautifulSoup(r.text, 'html.parser', parse_only=SoupStrainer('span'))
+    prices = [i.text for i in soup_1.find_all('span', attrs={'class':'price price-large'})]
+    soup_2 = BeautifulSoup(r.text, 'html.parser', parse_only=SoupStrainer('p'))
+    pharmacy_names = [i.text for i in soup_2.find_all('p', attrs={'class': 'list-title'})]
+    # pharmacy_names = [i.text for i in soup_2.find_all('p', attrs={'id': 'multipharm-loc-key', 'class': 'list-title'})]
+    # soup_3 = BeautifulSoup(r.text, 'html.parser', parse_only=SoupStrainer('p'))
+    # pharmacy_names = [i.text for i in soup_2.find_all('p', attrs={'id': 'singlepharm-name', 'class': 'list-title'})]
     return dict(zip(pharmacy_names, prices))
 
-def get_winner_drugs(num_retries=3):
+def get_winner_drugs(user_condition, num_retries=3, zipcode='02115'):
+    results_dict = {}
     for attempt_no in range(num_retries):
+        identified_condition = find_matching_condition(user_condition)[0]
+        condition = identified_condition[1]
+        drug = find_matching_drugs(condition)[attempt_no].split()[:-1]
+        # print(drug)
+        # price = re.sub(r"[^0-9/.]","",find_drug_price_wellrx(drug)) + ' $'
+        price = find_drug_price_wellrx(drug[0], zipcode=zipcode)
+        # print(price)
         try:
-            identified_condition = find_matching_condition(user_condition)[attempt_no]
-            drug_candidates = find_matching_drugs(identified_condition)[attempt_no]
-            return drug_candidates
-        except ValueError as error:
-            if attempt_no < (num_retries - 1):
-                pass
-            else:
-                raise error
+            results_dict[drug[0]] = list(list(price.items())[0])
+        except IndexError as e:
+            pass
+    return results_dict
+        # return drug_candidates
+        # except IndexError as error:
+        #     if attempt_no < (num_retries - 1):
+        #         pass
+        #     else:
+        #         raise error
 
 
 def count_and_save_words(url):
@@ -132,21 +145,40 @@ def count_and_save_words(url):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
+    #return render_template('main.html')
 
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    # return render_template('index.html')
+    return render_template('about.html')
 
 @app.route('/start', methods=['POST'])
 def get_counts():
     # get url
     data = json.loads(request.data.decode())
     url = data["url"]
-    if 'http://' not in url[:7]:
+    if not url[:8].startswith(('https://', 'http://')):
         url = 'http://' + url
+
     # start job
     job = q.enqueue_call(
         func=count_and_save_words, args=(url,), result_ttl=5000
     )
     # return created job id
     return job.get_id()
+
+# @app.route('/findmed', methods=['POST'])
+# def find_meds():
+#     # get url
+#     data = json.loads(request.data.decode())
+#     user_condition = data["user_condition"]
+    
+#     # start job
+#     job = q.enqueue_call(
+#         func=get_winner_drugs, args=(user_condition,), result_ttl=2500
+#     )
+#     # return created job id
+#     return job.get_id()
 
 
 @app.route("/results/<job_key>", methods=['GET'])

@@ -1,4 +1,5 @@
 .env
+*.rdb
 dump.rdb
 optimed-env
 __pycache__

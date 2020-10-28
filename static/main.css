@@ -1,0 +1,67 @@
+body{
+    background-image:url(bg_1000px.png);
+    background-repeat:no-repeat;
+    background-size: 1200px auto;
+    background-position:center top;
+    background-attachment:fixed;
+}
+.float-container {
+    max-width: 1000px;
+    border: 3px solid #fff;
+    position: 
+    padding: 20px;
+}
+
+.float-child {
+    width: 80%;
+    float: left;
+    padding: 0px;
+    border: 2px transparent;
+}  
+
+/*.container {
+  max-width: 1000px;
+ }*/
+
+#chart {
+  overflow-y: scroll;
+}
+
+#chart {
+  background: transparent;
+  padding: 10px;
+}
+
+#chart div {
+  width: 0px;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+#chart div {
+  height: 20px;
+  font: 12px;
+  background-color: #FF7400;
+  text-align: right;
+  padding: 2px;
+  color: black;
+  box-shadow: 2px 2px 2px gray;
+}
+
+
+/*body, html {
+  height: 100%;
+}*/
+/*.bg {*/
+  /* The image used */
+  /*background-image: url("https://github.com/alineu/optimed/tree/master/templates/images/bg_1000px.png");
+*/
+  /* Full height */
+  /*height: 100%;*/
+
+  /* Center and scale the image nicely */
+/*  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;*/
+/*}*/

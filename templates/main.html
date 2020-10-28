@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html ng-app="WordcountApp">
-  <head>
-    <title>OptiMed</title>
-    <link rel="shortcut icon" href="#" />
-    <!-- <img class="bg"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- styles -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap_temp.css') }}">
-  </head>
-    <body ng-controller="WordcountController">
-    <div class="float-container">
-      <div class="float-child">
-      <div class="row">
+{% extends "layout.html" %}
+{% block body %}
+<body ng-controller="WordcountController">
+  <div class="container">
+    <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
           <h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>
           <br>
           <form role="form" ng-submit="getResults()">
             <div class="form-group">
-              <input type="text" name="url" class="form-control" id="url-box" placeholder="Symptoms (e.g.: I have a mild headache)" style="max-width: 300px;" ng-model="url" required>
+              <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="url" required>
             </div>
             {% raw %}
               <button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>
             {% endraw %}
           </form>
-          <div class="alert alert-danger" role="alert" ng-show='urlError'>
+          <div class="alert alert-danger" role="alert" ng-show='urlerror'>
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
-            <span>There was an error submitting your request.<br>
+            <span>There was an error submitting your URL.<br>
             Please check to make sure it is valid before trying again.</span>
           </div>
         </div>
-      
-      <div class="col-sm-5 col-sm-offset-1">
-          <h3>Results</h3>
+        <div class="col-sm-5 col-sm-offset-1">
+          <h3>Resultshhh</h3>
           <br>
           <div id="results">
             <table class="table table-striped">
@@ -56,22 +44,27 @@
           </div>
           <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static', filename='spinner.gif') }}" ng-show="loading">
         </div>
-    </div>
-    </div>
-      <div class="float-child">
       <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
-         <word-count-chart data="wordcounts"></word-count-chart>
+          <p>
+            Click <a href="about">here</a> for more info
+          </p>
+        </div> 
+        <div class="col-sm-5 col-sm-offset-1">
+
+        </div> 
       </div>
+      </div>
+      <br>
+      <word-count-chart data="wordcounts"></word-count-chart>
     </div>
-    </div>
-    </div>
-    <br><br>
-    <!-- scripts -->
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
   </body>
-</html>
+
+ {% endblock %}
+
+<!-- creates the layout and block body is what we are going use  -->
