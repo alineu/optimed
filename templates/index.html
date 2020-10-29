@@ -8,22 +8,66 @@
     <!-- styles -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap_temp.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap_temp.css') }}"> -->
   </head>
     <body ng-controller="WordcountController">
-    <div class="float-container">
-      <div class="float-child">
-      <div class="row">
-        <div class="col-sm-5 col-sm-offset-1">
-          <h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>
+    <div class="container">
+
+      <div class="row" id="main-heading">
+        <div class="col-md-5">
+                    <h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+
+        </div>
+      </div>
+      <div class="row" id="main-motivation">
+        <div class="col-md-10">
+                    <h4><span>Ever stuggled with what drug to pick when you have a headache?</span></h4>
+                    <br>
+
+        </div>
+        <div class="col-md-10">
+                    <h4><span>Which pharmacy to go?</span></h4>
+                    <br>
+
+        </div>
+        <div class="col-md-10">
+                    <h4><span>How much would it cost for you?</span></h4>
+                    <br>
+
+        </div>
+        <div class="col-md-10">
+                    <h4><span>What are the side-effects?</span></h4>
+                    <br>
+
+        </div>
+      </div>
+
+      <div class="row" id="info-heading">
+        <div class="col-md-5">
+              <img src="{{ url_for('static', filename='info.png') }}">
           <br>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+          
+        </div>
+      </div>
+
+      <div class="row" id="main-body" >
+        <div class="col-md-8 col-md-offset-4">
+
+          <!-- <div class="d-flex justify-content-center"> -->
+
+          <!-- <form role="form" ng-submit="getResults()"> -->
           <form role="form" ng-submit="getResults()">
             <div class="form-group">
-              <input type="text" name="url" class="form-control" id="url-box" placeholder="Symptoms (e.g.: I have a mild headache)" style="max-width: 300px;" ng-model="url" required>
-            </div>
-            {% raw %}
+              <input type="text" name="url" class="form-control" id="url-box" placeholder="Symptoms (e.g.: I have a mild headache)" style="max-width: 325px;" ng-model="url" required>
+              {% raw %}
               <button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>
             {% endraw %}
+            </div>
+
           </form>
           <div class="alert alert-danger" role="alert" ng-show='urlError'>
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -33,7 +77,7 @@
           </div>
         </div>
       
-      <div class="col-sm-5 col-sm-offset-1">
+      <div class="col-md-12">
           <h3>Results</h3>
           <br>
           <div id="results">
@@ -41,31 +85,30 @@
               <thead>
                 <tr>
                   <th>Drug</th>
-                  <th>Score</th>
+                  <th>Price (USD)</th>
                 </tr>
               </thead>
               <tbody>
               {% raw %}
-                <tr ng-repeat="(key, val) in wordcounts">
-                  <td>{{ val[0] }}</td>
-                  <td>{{ val[1] }}</td>
+<!--                 <tr ng-repeat="(key, val) in wordcounts"> -->
+                <tr ng-repeat="(key, val) in optimed_search_results">
+<!--                   <td>{{ val[0] }}</td>
+                  <td>{{ val[1] }}</td> -->
+                  <td>{{ key }}</td>
+                  <td>{{ val }}</td>
                 </tr>
               {% endraw %}
               </tbody>
             </table>
           </div>
-          <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static', filename='qspinner.gif') }}" ng-show="loading">
+          <img class="col-md-3 col-md-offset-4" src="{{ url_for('static', filename='brainbulb.gif') }}" ng-show="loading">
         </div>
+        <word-count-chart data="optimed_search_results"></word-count-chart>
     </div>
-    </div>
-      <div class="float-child">
-      <div class="row">
-        <div class="col-sm-5 col-sm-offset-1">
-         <word-count-chart data="wordcounts"></word-count-chart>
+    <br>
+         <!-- <word-count-chart data="wordcounts"></word-count-chart> -->
+         
       </div>
-    </div>
-    </div>
-    </div>
     <br><br>
     <!-- scripts -->
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>

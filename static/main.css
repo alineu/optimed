@@ -1,11 +1,38 @@
 body{
     background-image:url(bg_1000px.png);
     background-repeat:no-repeat;
-    background-size: 1200px auto;
-    background-position:center top;
-    background-attachment:fixed;
+    background-size: cover;
+    background-position: center 1975px;
+    background-attachment:scroll;
 }
-.float-container {
+#main-body{
+  min-height: 700px;
+  padding-top: 65px;
+}
+#main-heading{
+  padding-top: 50px;
+  margin-left: 0px;
+  border-bottom: 2px solid #ffa500;
+}
+
+#main-heading{
+  padding-top: 50px;
+  margin-left: 0px;
+  border-bottom: 2px solid #ffa500;
+}
+#info-heading{
+  padding-top: 50px;
+}
+.form-control{
+display: inline-block;
+}
+#main-heading>div{
+padding-left: 0px;
+}
+
+
+
+/*.float-container {
     max-width: 1000px;
     border: 3px solid #fff;
     position: 
@@ -17,11 +44,10 @@ body{
     float: left;
     padding: 0px;
     border: 2px transparent;
-}  
-
-/*.container {
-  max-width: 1000px;
- }*/
+}  */
+.container {
+/*  max-width: 1000px;*/
+ }
 
 #chart {
   overflow-y: scroll;
@@ -44,7 +70,7 @@ body{
   font: 12px;
   background-color: #FF7400;
   text-align: right;
-  padding: 2px;
+  padding: 0px;
   color: black;
   box-shadow: 2px 2px 2px gray;
 }

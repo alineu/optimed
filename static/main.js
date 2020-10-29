@@ -23,7 +23,7 @@
         success(function(results) {
           $log.log(results);
           getWordCount(results);
-          $scope.wordcounts = null;
+          $scope.optimed_search_results = null;
           $scope.loading = true;
           $scope.submitButtonText = 'Loading...';
           $scope.urlerror = false;
@@ -73,7 +73,7 @@
               $log.log(data);
               $scope.loading = false;
               $scope.submitButtonText = "Submit";
-              $scope.wordcounts = data;
+              $scope.optimed_search_results = data;
               $timeout.cancel(timeout);
               return false;
             }
@@ -101,23 +101,23 @@
       replace: true,
       template: '<div id="chart"></div>',
       link: function (scope) {
-        scope.$watch('wordcounts', function() {
+        scope.$watch('optimed_search_results', function() {
           d3.select('#chart').selectAll('*').remove();
-          var data = scope.wordcounts;
-          for (var word in data) {
-            var key = data[word][0];
-            var value = data[word][1];
+          var data = scope.optimed_search_results;
+          for (var item in data) {
+            // var drug = data[item][0];
+            // var price = data[item][1];
             d3.select('#chart')
               .append('div')
               .selectAll('div')
-              .data(word[0])
+              .data(item[0])
               .enter()
               .append('div')
               .style('width', function() {
-                return (value * 5) + 'px';
+                return (data[item] * 20) + 'px';
               })
               .text(function(d){
-                return key;
+                return item;
               });
           }
         }, true);
