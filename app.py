@@ -24,8 +24,8 @@ from models import OptiMedResult
 db.create_all()
 Base = db.Model.metadata.reflect(db.engine)
 conditions_table = db.Model.metadata.tables['drugs']
-pharmacies_latlon = db.Model.metadata.tables['pharmacies_latlon']
-pharmacies_detail = db.Model.metadata.tables['pharmacies_detail']
+# pharmacies_latlon = db.Model.metadata.tables['pharmacies_latlon']
+# pharmacies_detail = db.Model.metadata.tables['pharmacies_detail']
 # from utils.app_utils import *
 
 q = Queue(connection=conn)
