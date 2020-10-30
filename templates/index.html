@@ -18,28 +18,24 @@
                     <h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>
         </div>
         <div class="col-md-5 col-md-offset-1">
-
         </div>
       </div>
-      <div class="row" id="main-motivation">
-        <div class="col-md-10">
-                    <h4><span>Ever stuggled with what drug to pick when you have a headache?</span></h4>
-                    <br>
+      <br>
+  <div class="row" id="main-motivation">
+        <div class="col-md-4">
+                    <h4><span>What drug to pick?</span></h4>
 
         </div>
-        <div class="col-md-10">
-                    <h4><span>Which pharmacy to go?</span></h4>
-                    <br>
-
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
                     <h4><span>How much would it cost for you?</span></h4>
-                    <br>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-4">
+                    <h4><span>Which pharmacy to go?</span></h4>
+
+        </div>
+        <div class="col-md-8">
                     <h4><span>What are the side-effects?</span></h4>
-                    <br>
 
         </div>
       </div>
@@ -53,13 +49,16 @@
           
         </div>
       </div>
-
+      <br>
+        <div class="col-md-8 col-md-offset-4">
+        <h4 id="description"><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span> is a <b>Python</b> drug-recommendation web application that uses <b>Flask</b> as webserver and is deployed on <b>Heroku</b>. Database management and the user interface are handled with <b>PostgreSQL</b> and <b>JavaScript</b>, respectively.<h4> </div>
       <div class="row" id="main-body" >
         <div class="col-md-8 col-md-offset-4">
 
           <!-- <div class="d-flex justify-content-center"> -->
 
           <!-- <form role="form" ng-submit="getResults()"> -->
+            <br><br>
           <form role="form" ng-submit="getResults()">
             <div class="form-group">
               <input type="text" name="url" class="form-control" id="url-box" placeholder="Symptoms (e.g.: I have a mild headache)" style="max-width: 325px;" ng-model="url" required>
@@ -106,6 +105,7 @@
         <word-count-chart data="optimed_search_results"></word-count-chart>
     </div>
     <br>
+        
          <!-- <word-count-chart data="wordcounts"></word-count-chart> -->
          
       </div>
