@@ -1,5 +1,7 @@
+
 ```html
-<h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>```
+<h1><span style="color:green;">Opti</span><span style="color:#FF7400;">Med</span></h1>
+```
 
 OptiMed is a [Python](https://www.python.org/) drug-recommendation web-application that uses [Flask](https://palletsprojects.com/p/flask/) as webserver and is deployed on [Heroku](https://www.heroku.com/). Database management and the user interface are handled with [PostgreSQL](https://www.postgresql.org/) and [JavaScript](https://www.javascript.com/) ([AngularJS](https://angular.io/)), respectively.
 
