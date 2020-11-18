@@ -138,7 +138,7 @@ def find_meds(user_condition):
         db.session.add(result)
         print('commiting!')
         db.session.commit()
-        print('doen!')
+        print('done!')
         print(result.id)
         return result.id
     except:
@@ -209,7 +209,7 @@ def get_counts():
     )
     # return created job id
     print(url)
-    print('abolfazal')
+    # print('abolfazal')
 
     print(job.get_id())
     return job.get_id()
@@ -240,7 +240,7 @@ def get_results(job_key):
     job = Job.fetch(job_key, connection=conn)
 
     if job.is_finished:
-        print('miaumiau')
+        # print('miaumiau')
 
         result = OptiMedResult.query.filter_by(id=job.result).first()
         print(result)

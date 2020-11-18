@@ -1,13 +1,13 @@
 body{
-    background-image:url(bg_1000px.png);
+    background-image:url(pill-question-mark.png);
     background-repeat:no-repeat;
-    background-size: cover;
-    background-position: center 860px;
+    background-size: 300px;
+    background-position: center 500px;
     background-attachment:scroll;
 }
 #main-body{
   min-height: 700px;
-  padding-top: 65px;
+  padding-top: 0px;
 }
 #main-heading{
   padding-top: 50px;
@@ -17,14 +17,14 @@ body{
 #description{
   line-height: 2;
 }
-#main-heading{
+/*#main-heading{
   padding-top: 50px;
   margin-left: 0px;
   border-bottom: 2px solid #ffa500;
-}
-#info-heading{
+}*/
+/*#info-heading{
   padding-top: 50px;
-}
+}*/
 .form-control{
 display: inline-block;
 }

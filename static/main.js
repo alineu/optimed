@@ -2,9 +2,9 @@
 
   'use strict';
 
-  angular.module('WordcountApp', [])
+  angular.module('OptiMedApp', [])
 
-  .controller('WordcountController', ['$scope', '$log', '$http', '$timeout',
+  .controller('OptiMedController', ['$scope', '$log', '$http', '$timeout',
     function($scope, $log, $http, $timeout) {
 
     $scope.submitButtonText = 'Submit';
@@ -22,7 +22,7 @@
       $http.post('/start', {'url': userInput}).
         success(function(results) {
           $log.log(results);
-          getWordCount(results);
+          getBestMed(results);
           $scope.optimed_search_results = null;
           $scope.loading = true;
           $scope.submitButtonText = 'Loading...';
@@ -59,7 +59,7 @@
 
     // };
 
-    function getWordCount(jobID) {
+    function getBestMed(jobID) {
 
       var timeout = '';
 
