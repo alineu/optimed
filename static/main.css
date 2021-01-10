@@ -5,6 +5,13 @@ body{
     background-position: center 500px;
     background-attachment:scroll;
 }
+
+#radar-chart {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+    }
+    
 #main-body{
   min-height: 700px;
   padding-top: 0px;
@@ -17,36 +24,16 @@ body{
 #description{
   line-height: 2;
 }
-/*#main-heading{
-  padding-top: 50px;
-  margin-left: 0px;
-  border-bottom: 2px solid #ffa500;
-}*/
-/*#info-heading{
-  padding-top: 50px;
-}*/
+
 .form-control{
 display: inline-block;
 }
+
 #main-heading>div{
 padding-left: 0px;
 }
 
 
-
-/*.float-container {
-    max-width: 1000px;
-    border: 3px solid #fff;
-    position: 
-    padding: 20px;
-}
-
-.float-child {
-    width: 80%;
-    float: left;
-    padding: 0px;
-    border: 2px transparent;
-}  */
 .container {
 /*  max-width: 1000px;*/
  }
@@ -77,19 +64,3 @@ padding-left: 0px;
   box-shadow: 2px 2px 2px gray;
 }
 
-
-/*body, html {
-  height: 100%;
-}*/
-/*.bg {*/
-  /* The image used */
-  /*background-image: url("https://github.com/alineu/optimed/tree/master/templates/images/bg_1000px.png");
-*/
-  /* Full height */
-  /*height: 100%;*/
-
-  /* Center and scale the image nicely */
-/*  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;*/
-/*}*/
