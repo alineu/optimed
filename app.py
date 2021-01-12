@@ -121,9 +121,18 @@ def find_meds(user_condition):
         errors.append("Unable to add the item to database.")
         return {"error": errors}
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
+
+@app.route('/index.html', methods=['GET', 'POST'])
+def index_():
+    return render_template('index.html')
+
+@app.route('/index_test.html', methods=['GET', 'POST'])
+def index_test():
+    return render_template('index_test.html')
 
 @app.route('/about', methods=['GET', 'POST'])
 def about():

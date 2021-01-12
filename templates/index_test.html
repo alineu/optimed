@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="OptiMedApp">
+<html ng-app="OptiMedAppRadar">
   <head>
     <title>OptiMed</title>
     <link rel="shortcut icon" href="#" />
@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   </head>
-  <body ng-controller="OptiMedController">
+<body ng-controller="OptiMedControllerRadar">
        <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
     <div class="container">
@@ -22,8 +22,8 @@
 
       <nav class="nav-menu float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a href="index_test.html">Test</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li class="active"><a href="index_test.html">Test</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -35,7 +35,7 @@
         <div class="col-md-8 col-md-offset-4">
 
             <br>
-          <form role="form" ng-submit="getResults()">
+          <form role="form" ng-submit="getMyResults()">
             <div class="form-group">
               <input type="text" name="url" class="form-control" id="url-box" placeholder="Symptoms (e.g.: I have a mild headache)" style="max-width: 325px;" ng-model="url" required>
               {% raw %}
@@ -65,7 +65,7 @@
               </thead>
               <tbody>
               {% raw %}
-                <tr ng-repeat="(key, val) in optimed_search_results">
+                <tr ng-repeat="(key, val) in optimed_search_results_radar">
                   <td>{{ key }}</td>
                   <td>{{ val }}</td>
                 </tr>
@@ -74,8 +74,8 @@
             </table>
           </div>
           <img class="col-md-3 col-md-offset-4" src="{{ url_for('static', filename='brainbulb.gif') }}" ng-show="loading">
-        </div>
-          <word-count-chart data="optimed_search_results"></word-count-chart>
+        </div id="radar-chart">
+          <word-count-chart data="optimed_search_results_radar"></word-count-chart>
         </div>
     <br>
 

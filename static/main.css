@@ -6,11 +6,6 @@ body{
     background-attachment:scroll;
 }
 
-#radar-chart {
-      position: absolute;
-      top: 50px;
-      left: 100px;
-    }
     
 #main-body{
   min-height: 700px;
@@ -55,6 +50,33 @@ padding-left: 0px;
 }
 
 #chart div {
+  height: 20px;
+  font: 12px;
+  background-color: #FF7400;
+  text-align: right;
+  padding: 0px;
+  color: black;
+  box-shadow: 2px 2px 2px gray;
+}
+
+#radarchart {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+    }
+#radarchart {
+  background: transparent;
+  padding: 10px;
+}
+
+#radarchart div {
+  width: 0px;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+#radarchart div {
   height: 20px;
   font: 12px;
   background-color: #FF7400;
